@@ -1,17 +1,20 @@
-# tempori
+# Tempori
 
-A new Flutter project.
+Tempori is a Flutter app for tracking items and their expiration dates.
 
-## Getting Started
+## Supabase setup
 
-This project is a starting point for a Flutter application.
+Apply [`supabase/migrations/20261030000000_user_dashboard_fields_and_item_photos.sql`](./supabase/migrations/20261030000000_user_dashboard_fields_and_item_photos.sql)
+to the Supabase project before opening the user dashboard. It adds the `notes`
+and `created_at` columns and configures the public `item-photos` bucket with
+upload, update, and delete access restricted to each signed-in user's folder.
+Photos are publicly viewable by URL.
 
-A few resources to get you started if this is your first Flutter project:
+Configure the Supabase URL and anon key in `lib/supabase_config.dart`, then
+run `flutter pub get` and `flutter run`.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To let users enter the dashboard immediately after registration, open
+**Authentication → Sign In / Providers → Email** in the Supabase Dashboard and
+turn off **Confirm email**. Existing unconfirmed accounts must be confirmed
+once under **Authentication → Users**; changing this setting only affects new
+registrations.
