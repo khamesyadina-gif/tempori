@@ -28,7 +28,7 @@ jobs:
         run: flutter pub get
 
       - name: Build Admin Web
-        run: flutter build web -t lib/admin_main.dart
+        run: flutter build web -t lib/admin_main.dart --base-href /tempori/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
