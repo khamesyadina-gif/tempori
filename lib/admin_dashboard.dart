@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'admin_login_page.dart';
 
 const lavender = Color(0xFF9B80D0);
 const darkLavender = Color(0xFF7555A6);
@@ -260,18 +261,21 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 
   Future<void> _logout() async {
-    try {
-      await supabase.auth.signOut();
+  try {
+    await supabase.auth.signOut();
 
-      if (!mounted) return;
+    if (!mounted) return;
 
-      _showMessage('Berhasil keluar dari akun.');
-      // Sesuaikan navigasi kembali ke AdminLoginPage dengan
-      // alur routing yang digunakan pada admin_login_page.dart.
-    } catch (e) {
-      _showMessage('Gagal keluar: $e', isError: true);
-    }
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => const AdminLoginPage(),
+      ),
+      (route) => false,
+    );
+  } catch (e) {
+    _showMessage('Gagal keluar: $e', isError: true);
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -974,7 +978,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 
   Widget _categoryStatistic(bool isMobile) {
-    return Container(
+  return InkWell(
+    onTap: () {
+      setState(() {
+        selectedMenu = 1;
+      });
+    },
+    borderRadius: BorderRadius.circular(19),
+    child: Container(
       width: isMobile ? double.infinity : 300,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -1035,8 +1046,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _panel({
     required String title,
